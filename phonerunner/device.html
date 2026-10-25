@@ -24,7 +24,7 @@
           </span>
         </div>
         <div class="device-toolbar">
-          <span class="toolbar-spec">Android 11 <span>·</span> 2 vCPU <span>·</span> 2 GB</span>
+          <span class="toolbar-spec">Android 9 <span>·</span> 2 vCPU <span>·</span> 2 GB</span>
           <button class="tool-button" id="reconnect" type="button" title="Muat ulang koneksi">
             <span aria-hidden="true">↻</span><span class="button-label">Hubungkan ulang</span>
           </button>
@@ -64,7 +64,7 @@
             <p class="eyebrow">PERANGKAT</p>
             <div class="side-device">
               <span class="side-device-icon">▣</span>
-              <div><strong>Galaxy S10</strong><small>Android 11 · x86</small></div>
+              <div><strong>Galaxy S10</strong><small>Android 9 · x86</small></div>
             </div>
             <div class="side-divider"></div>
             <p class="eyebrow">ALOKASI RESOURCE</p>
@@ -107,12 +107,12 @@
               #noVNC_control_bar_handle, #noVNC_status,
               #noVNC_fallback_errormsg, #noVNC_connect_dlg,
               #noVNC_credentials_dlg { display: none !important; }
-              html, body, #noVNC_container, #noVNC_screen {
+              html, body, #noVNC_screen {
                 width: 100% !important; height: 100% !important;
                 min-height: 0 !important; margin: 0 !important;
                 overflow: hidden !important; background: #000 !important;
               }
-              #noVNC_screen { position: absolute !important; inset: 0 !important; }
+              #noVNC_screen { position: fixed !important; inset: 0 !important; }
             `;
             doc.head.appendChild(style);
           }
@@ -130,6 +130,15 @@
         }, 300);
         window.setTimeout(() => message.classList.add("hidden"), 1200);
       });
+
+      const viewportObserver = new ResizeObserver(() => {
+        try {
+          frame.contentWindow.dispatchEvent(new Event("resize"));
+        } catch {
+          // The iframe may be navigating during a reconnect.
+        }
+      });
+      viewportObserver.observe(document.querySelector(".emulator-viewport"));
 
       document.getElementById("reconnect").addEventListener("click", () => {
         message.classList.remove("hidden");
