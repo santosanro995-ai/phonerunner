@@ -1,0 +1,12 @@
+{
+  "name": "android-virtual-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal web UI for a Docker Android emulator",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

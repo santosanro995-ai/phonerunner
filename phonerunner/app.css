@@ -1,0 +1,248 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #101114;
+  color: #f3f3f6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --muted: #8e909a;
+  --border: #282a31;
+  --panel: #17181d;
+  --accent: #aebcff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(ellipse at 48% 0%, #25283a 0, #15161b 42%, #101114 75%);
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+
+.shell {
+  width: min(100%, 1440px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 42px;
+  display: grid;
+  grid-template-rows: 72px 1fr 48px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff0d;
+}
+
+.brand { display: inline-flex; align-items: center; gap: 11px; font-size: 15px; font-weight: 700; letter-spacing: -.035em; }
+.brand-mark {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid #abb9ff3d;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #404976, #252a40);
+  color: #d6dcff;
+  font-size: 16px;
+  font-weight: 750;
+}
+.brand-light { color: #9ba0ae; font-weight: 450; }
+.topbar-right { display: flex; align-items: center; gap: 20px; }
+.secure-label { display: flex; align-items: center; gap: 8px; color: #a9abb5; font-size: 12px; }
+.secure-dot, .online-dot, .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #58d69a; box-shadow: 0 0 9px #58d69a55; }
+.avatar { display: grid; width: 31px; height: 31px; place-items: center; border: 1px solid #343640; border-radius: 50%; background: #202127; color: #cbd0e7; font-size: 12px; }
+
+.dashboard { width: min(100%, 1070px); margin: 0 auto; padding: 56px 0 38px; }
+.welcome { display: flex; align-items: end; justify-content: space-between; margin-bottom: 31px; }
+.eyebrow { margin: 0 0 12px; color: #858894; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+h1 { margin: 0; font-size: clamp(28px, 3.2vw, 39px); font-weight: 610; letter-spacing: -.055em; }
+.welcome-copy { margin: 10px 0 0; color: #a3a5af; font-size: 14px; }
+.device-count { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border: 1px solid #2b2d34; border-radius: 99px; color: #b5b6bf; font-size: 12px; }
+.device-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 340px)); gap: 19px; }
+
+.device-card {
+  display: block;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid #30313a;
+  border-radius: 15px;
+  background: linear-gradient(160deg, #1b1c22, #17181d 62%);
+  box-shadow: 0 15px 40px #0002;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.device-card:hover, .device-card:focus-visible { transform: translateY(-3px); border-color: #6874a4; box-shadow: 0 20px 50px #0005; outline: none; }
+.card-topline, .device-info, .resource-list { display: flex; align-items: center; justify-content: space-between; }
+.device-type { display: inline-flex; align-items: center; gap: 8px; color: #a4a7b2; font-size: 10px; font-weight: 700; letter-spacing: .12em; }
+.android-glyph { color: #aebcff; font-size: 17px; }
+.status-pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 8px; border: 1px solid #373840; border-radius: 99px; background: #202126; color: #b5b7c0; font-size: 10px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #efb54b; }
+.status-pill[data-state="running"] .status-dot { background: #58d69a; box-shadow: 0 0 8px #58d69a66; }
+.status-pill[data-state="stopped"] .status-dot { background: #f0767c; }
+
+.preview-stage {
+  position: relative;
+  height: 219px;
+  margin: 17px 0 16px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #ffffff08;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 50% 60%, #333d64a8 0, transparent 57%),
+    linear-gradient(145deg, #20212a, #14151a);
+}
+.preview-phone {
+  position: relative;
+  width: 91px;
+  height: 176px;
+  padding: 5px;
+  border: 2px solid #545660;
+  border-radius: 17px;
+  background: #090a0c;
+  box-shadow: 0 16px 32px #0009;
+  transform: rotate(-5deg);
+}
+.preview-camera { position: absolute; z-index: 1; top: 7px; left: 50%; width: 23px; height: 5px; transform: translateX(-50%); border-radius: 99px; background: #111218; }
+.preview-wallpaper { position: relative; height: 100%; overflow: hidden; padding-top: 34px; border-radius: 11px; background: radial-gradient(ellipse at 70% 78%, #dd806a, transparent 43%), radial-gradient(ellipse at 24% 43%, #626fbb, transparent 48%), linear-gradient(160deg, #1e2b4c, #20243a 54%, #51304b); text-align: center; }
+.preview-clock { font-size: 23px; font-weight: 350; letter-spacing: -.06em; }
+.preview-date { margin-top: 1px; color: #ffffffbb; font-size: 6px; }
+.preview-search { height: 12px; margin: 38px 8px 7px; border: 1px solid #ffffff38; border-radius: 99px; background: #ffffff16; }
+.preview-apps { display: flex; justify-content: center; gap: 5px; }
+.preview-apps i { width: 11px; height: 11px; border: 1px solid #ffffff6b; border-radius: 4px; background: #ffffff28; }
+.preview-caption { position: absolute; right: 10px; bottom: 9px; color: #858895; font-size: 8px; font-weight: 650; letter-spacing: .09em; }
+
+.device-info h2 { margin: 0; font-size: 16px; font-weight: 630; letter-spacing: -.025em; }
+.device-info p { margin: 5px 0 0; color: #9396a0; font-size: 11px; }
+.meta-separator { margin: 0 4px; color: #5e616b; }
+.open-device { display: grid; width: 31px; height: 31px; place-items: center; border: 1px solid #363842; border-radius: 9px; color: #b6c0f0; font-size: 17px; }
+.card-divider { height: 1px; margin: 17px 0 13px; background: #ffffff10; }
+.resource-list { justify-content: flex-start; gap: 19px; color: #b0b2bc; font-size: 10px; }
+.resource-list > span { display: inline-flex; align-items: center; gap: 6px; }
+.resource-icon { color: #aebcff; font-size: 14px; font-style: normal; }
+.card-action { display: flex; align-items: center; justify-content: space-between; margin: 18px -18px -18px; padding: 14px 18px; border-top: 1px solid #ffffff0d; color: #c4ccf4; font-size: 12px; font-weight: 600; }
+.card-action span { font-size: 17px; transition: transform .18s ease; }
+.device-card:hover .card-action span { transform: translateX(4px); }
+
+.help-panel { display: flex; align-items: flex-start; gap: 14px; margin-top: 26px; padding: 17px; border: 1px solid #292b34; border-radius: 12px; background: #191a1f9c; }
+.help-icon { display: grid; flex: 0 0 24px; height: 24px; place-items: center; border: 1px solid #3d4567; border-radius: 50%; color: #b3c0ff; font-size: 12px; }
+.help-panel h2 { margin: 2px 0 5px; font-size: 12px; font-weight: 650; }
+.help-panel p { max-width: 700px; margin: 0; color: #989aa5; font-size: 11px; line-height: 1.65; }
+.help-panel strong { color: #c6c7ce; font-weight: 550; }
+.help-arrow { margin-left: auto; color: #767986; }
+
+.page-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #ffffff0c; color: #727580; font-size: 9px; letter-spacing: .06em; }
+.footer-separator { padding: 0 5px; color: #51535c; }
+.page-footer > span:last-child { letter-spacing: 0; font-size: 10px; }
+
+/* Device workspace */
+.device-page { background: radial-gradient(ellipse at 52% 30%, #242735 0, #14151a 47%, #101114 82%); }
+.device-shell { grid-template-rows: 66px 1fr 42px; padding: 0 26px; }
+.device-topbar { gap: 20px; }
+.device-heading { display: flex; align-items: center; gap: 11px; }
+.back-link { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid #30323b; border-radius: 8px; color: #c0c2cb; font-size: 17px; }
+.heading-divider { width: 1px; height: 23px; margin: 0 5px; background: #34363f; }
+.heading-device-icon { color: #b3bfff; font-size: 15px; }
+.heading-device-name { font-size: 13px; font-weight: 600; }
+.device-heading .status-pill { margin-left: 3px; }
+.device-toolbar { display: flex; align-items: center; gap: 9px; }
+.toolbar-spec { margin-right: 6px; color: #858893; font-size: 10px; }
+.toolbar-spec span { margin: 0 3px; color: #52545e; }
+.tool-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 32px; padding: 0 10px; border: 1px solid #343640; border-radius: 8px; background: #1b1c22; color: #d2d3da; cursor: pointer; font-size: 11px; }
+.tool-button:hover { border-color: #626e9a; background: #242630; }
+.tool-button > span:first-child { color: #b8c5ff; font-size: 16px; }
+
+.emulator-workspace { width: min(100%, 1320px); min-height: 0; margin: 0 auto; padding: 20px 0 16px; display: grid; grid-template-columns: minmax(0, 1fr) 224px; gap: 15px; }
+.emulator-panel { min-width: 0; min-height: 0; display: grid; grid-template-rows: 38px minmax(0, 1fr) 33px; overflow: hidden; border: 1px solid #31333d; border-radius: 12px; background: #15161a; box-shadow: 0 18px 55px #0004; }
+.emulator-panel-top, .emulator-panel-footer { display: flex; align-items: center; justify-content: space-between; padding: 0 13px; background: #1b1c22; }
+.emulator-panel-top { border-bottom: 1px solid #ffffff0c; }
+.panel-caption { display: flex; align-items: center; gap: 8px; color: #b4b6c0; font-size: 9px; font-weight: 700; letter-spacing: .11em; }
+.keyboard-hint { color: #7f828d; font-size: 10px; }
+.emulator-viewport { position: relative; min-height: 0; overflow: hidden; background: #050506; }
+.emulator-viewport iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #050506; }
+.connection-message { position: absolute; z-index: 2; inset: 0; display: grid; align-content: center; justify-items: center; gap: 11px; background: #08090bf2; color: #dddfe6; text-align: center; font-size: 12px; pointer-events: none; }
+.connection-message.hidden { display: none; }
+.connection-message > span:last-child { color: #858893; font-size: 11px; }
+.spinner { width: 21px; height: 21px; border: 2px solid #ffffff25; border-top-color: #b8c5ff; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.emulator-panel-footer { border-top: 1px solid #ffffff0c; color: #757883; font-size: 8px; font-weight: 650; letter-spacing: .08em; }
+.connection-indicator { display: flex; align-items: center; gap: 6px; color: #8a8d98; font-size: 9px; font-weight: 450; letter-spacing: 0; }
+.connection-indicator i { width: 6px; height: 6px; border-radius: 50%; background: #e2ae4a; }
+.connection-indicator.is-running i { background: #58d69a; box-shadow: 0 0 8px #58d69a55; }
+.side-panel { display: flex; flex-direction: column; gap: 12px; }
+.side-card { padding: 15px 13px; border: 1px solid #30323a; border-radius: 11px; background: #191a20; }
+.side-card .eyebrow { margin-bottom: 12px; font-size: 9px; }
+.side-device { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.side-device-icon { display: grid; width: 34px; height: 36px; place-items: center; border: 1px solid #454b69; border-radius: 9px; background: #272a38; color: #bec8ff; }
+.side-device strong, .side-device small { display: block; }
+.side-device strong { font-size: 11px; font-weight: 600; }
+.side-device small { margin-top: 4px; color: #8c8e99; font-size: 9px; }
+.side-divider { height: 1px; margin: 0 0 14px; background: #ffffff10; }
+.resource-row { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; color: #8f929d; font-size: 10px; }
+.resource-row strong { display: inline-flex; align-items: center; gap: 6px; color: #c1c2ca; font-size: 10px; font-weight: 550; }
+.resource-row .online-dot { width: 6px; height: 6px; }
+.tip-card { padding: 14px; }
+.tip-icon { color: #aebcff; font-size: 17px; }
+.tip-card h2 { margin: 11px 0 7px; font-size: 11px; font-weight: 620; }
+.tip-card p { margin: 0; color: #9395a0; font-size: 10px; line-height: 1.7; }
+.device-footer a { color: #a4a8b9; }
+.device-footer a:hover { color: #d5d9ed; }
+
+.emulator-panel:fullscreen { width: 100vw; height: 100vh; border: 0; border-radius: 0; }
+.emulator-panel:fullscreen .emulator-panel-top, .emulator-panel:fullscreen .emulator-panel-footer { padding-right: 20px; padding-left: 20px; }
+
+@media (min-width: 1300px) {
+  .emulator-workspace { grid-template-columns: minmax(0, 1fr) 246px; }
+}
+
+@media (max-width: 900px) {
+  .shell { padding-right: 24px; padding-left: 24px; }
+  .device-shell { padding-right: 16px; padding-left: 16px; }
+  .emulator-workspace { grid-template-columns: minmax(0, 1fr) 190px; }
+  .toolbar-spec { display: none; }
+  .button-label { display: none; }
+  .tool-button { width: 34px; padding: 0; }
+}
+
+@media (max-width: 640px) {
+  .shell { grid-template-rows: 60px 1fr 42px; padding: 0 17px; }
+  .dashboard { padding-top: 38px; }
+  .welcome { align-items: flex-start; gap: 12px; }
+  .welcome-copy { max-width: 240px; line-height: 1.5; }
+  .device-count { padding: 7px 9px; font-size: 10px; white-space: nowrap; }
+  .device-grid { grid-template-columns: minmax(0, 1fr); }
+  .device-card { max-width: 390px; }
+  .help-panel { margin-top: 20px; }
+  .topbar-right { gap: 10px; }
+
+  .device-shell { height: 100dvh; min-height: 420px; grid-template-rows: 54px minmax(0, 1fr) 34px; padding: 0 9px; }
+  .device-topbar { gap: 8px; }
+  .device-topbar > .brand { gap: 7px; font-size: 12px; }
+  .device-topbar > .brand .brand-mark { width: 27px; height: 27px; }
+  .device-heading { gap: 6px; }
+  .heading-divider, .heading-device-icon { display: none; }
+  .heading-device-name { max-width: 68px; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+  .device-heading .status-pill { gap: 5px; padding: 5px 6px; font-size: 9px; }
+  .device-toolbar { gap: 5px; }
+  .tool-button { width: 30px; min-height: 30px; }
+  .fullscreen-button { display: none; }
+  .emulator-workspace { padding: 8px 0; grid-template-columns: minmax(0, 1fr); }
+  .emulator-panel { grid-template-rows: 31px minmax(0, 1fr) 27px; }
+  .side-panel { display: none; }
+  .panel-caption { font-size: 8px; }
+  .keyboard-hint { font-size: 8px; }
+  .emulator-panel-footer { padding: 0 8px; font-size: 7px; }
+  .connection-indicator { font-size: 8px; }
+  .device-footer > span:last-child { display: none; }
+}
+
+@media (max-height: 600px) and (min-width: 641px) {
+  .device-shell { grid-template-rows: 56px minmax(0, 1fr) 32px; }
+  .emulator-workspace { padding: 8px 0; }
+}

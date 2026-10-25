@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101114">
+    <title>Galaxy S10 — Android Virtual</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body class="device-page">
+    <div class="shell device-shell">
+      <header class="topbar device-topbar">
+        <a class="brand" href="/" aria-label="Kembali ke dashboard">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <span>android<span class="brand-light">cloud</span></span>
+        </a>
+        <div class="device-heading">
+          <a class="back-link" href="/" aria-label="Kembali ke daftar perangkat">←</a>
+          <span class="heading-divider"></span>
+          <span class="heading-device-icon">▣</span>
+          <span class="heading-device-name">Galaxy S10</span>
+          <span class="status-pill" id="device-status" data-state="starting">
+            <span class="status-dot"></span><span id="device-status-text">Menghubungkan</span>
+          </span>
+        </div>
+        <div class="device-toolbar">
+          <span class="toolbar-spec">Android 11 <span>·</span> 2 vCPU <span>·</span> 2 GB</span>
+          <button class="tool-button" id="reconnect" type="button" title="Muat ulang koneksi">
+            <span aria-hidden="true">↻</span><span class="button-label">Hubungkan ulang</span>
+          </button>
+          <button class="tool-button fullscreen-button" id="fullscreen" type="button" title="Layar penuh">
+            <span aria-hidden="true">⛶</span><span class="button-label">Layar penuh</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="emulator-workspace">
+        <section class="emulator-panel" id="emulator-panel" aria-label="Workspace perangkat Android">
+          <div class="emulator-panel-top">
+            <div class="panel-caption"><span class="live-dot"></span> LAYAR PERANGKAT</div>
+            <span class="keyboard-hint">Klik layar untuk mengontrol perangkat</span>
+          </div>
+          <div class="emulator-viewport">
+            <div class="connection-message" id="connection-message">
+              <span class="spinner" aria-hidden="true"></span>
+              <strong>Menghubungkan ke Galaxy S10</strong>
+              <span>Emulator mungkin perlu beberapa saat untuk siap.</span>
+            </div>
+            <iframe
+              id="emulator"
+              title="Layar interaktif Android Galaxy S10"
+              src="/novnc/vnc.html?autoconnect=true&amp;resize=scale&amp;path=novnc/websockify&amp;show_dot=false"
+              allow="clipboard-read; clipboard-write"
+            ></iframe>
+          </div>
+          <div class="emulator-panel-footer">
+            <span>SESI ANDA TETAP BERJALAN MESKI HALAMAN DITUTUP</span>
+            <span class="connection-indicator" id="connection-indicator"><i></i><span id="connection-label">Menghubungkan</span></span>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <section class="side-card">
+            <p class="eyebrow">PERANGKAT</p>
+            <div class="side-device">
+              <span class="side-device-icon">▣</span>
+              <div><strong>Galaxy S10</strong><small>Android 11 · x86</small></div>
+            </div>
+            <div class="side-divider"></div>
+            <p class="eyebrow">ALOKASI RESOURCE</p>
+            <div class="resource-row"><span>CPU</span><strong>2 vCPU</strong></div>
+            <div class="resource-row"><span>Memori</span><strong>2 GB RAM</strong></div>
+            <div class="resource-row"><span>Akselerasi</span><strong><i class="online-dot"></i> KVM</strong></div>
+          </section>
+          <section class="side-card tip-card">
+            <span class="tip-icon">⌨</span>
+            <h2>Kontrol perangkat</h2>
+            <p>Klik dan seret untuk sentuhan. Ketik untuk memasukkan teks. Gunakan layar penuh untuk pengalaman yang lebih nyaman.</p>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="page-footer device-footer">
+        <span><a href="/">← KEMBALI KE DASHBOARD</a></span>
+        <span>Android Virtual <span class="footer-separator">·</span> Koneksi terenkripsi HTTPS</span>
+      </footer>
+    </div>
+
+    <script>
+      const frame = document.getElementById("emulator");
+      const message = document.getElementById("connection-message");
+      const statusPill = document.getElementById("device-status");
+      const statusLabel = document.getElementById("device-status-text");
+      const connectionLabel = document.getElementById("connection-label");
+      const indicator = document.getElementById("connection-indicator");
+      const panel = document.getElementById("emulator-panel");
+
+      function hideNoVncControls() {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc || !doc.head) return false;
+          if (!doc.getElementById("phone-view-style")) {
+            const style = doc.createElement("style");
+            style.id = "phone-view-style";
+            style.textContent = `
+              #noVNC_control_bar, #noVNC_control_bar_anchor,
+              #noVNC_control_bar_handle, #noVNC_status,
+              #noVNC_fallback_errormsg, #noVNC_connect_dlg,
+              #noVNC_credentials_dlg { display: none !important; }
+              html, body, #noVNC_container, #noVNC_screen {
+                width: 100% !important; height: 100% !important;
+                min-height: 0 !important; margin: 0 !important;
+                overflow: hidden !important; background: #000 !important;
+              }
+              #noVNC_screen { position: absolute !important; inset: 0 !important; }
+            `;
+            doc.head.appendChild(style);
+          }
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      frame.addEventListener("load", () => {
+        let attempts = 0;
+        const inject = window.setInterval(() => {
+          attempts += 1;
+          if (hideNoVncControls() || attempts > 30) window.clearInterval(inject);
+        }, 300);
+        window.setTimeout(() => message.classList.add("hidden"), 1200);
+      });
+
+      document.getElementById("reconnect").addEventListener("click", () => {
+        message.classList.remove("hidden");
+        frame.src = `/novnc/vnc.html?autoconnect=true&resize=scale&path=novnc/websockify&show_dot=false&reconnect=${Date.now()}`;
+      });
+
+      document.getElementById("fullscreen").addEventListener("click", async () => {
+        try {
+          if (document.fullscreenElement) {
+            await document.exitFullscreen();
+          } else {
+            await panel.requestFullscreen();
+          }
+        } catch (error) {
+          console.error("Fullscreen request failed:", error);
+        }
+      });
+
+      document.addEventListener("fullscreenchange", () => {
+        const button = document.getElementById("fullscreen");
+        const label = button.querySelector(".button-label");
+        const expanded = Boolean(document.fullscreenElement);
+        button.title = expanded ? "Keluar dari layar penuh" : "Layar penuh";
+        label.textContent = expanded ? "Keluar layar penuh" : "Layar penuh";
+      });
+
+      async function updateDeviceStatus() {
+        try {
+          const response = await fetch("/api/status", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const { state } = await response.json();
+          const running = state === "running";
+          statusPill.dataset.state = running ? "running" : "stopped";
+          statusLabel.textContent = running ? "Aktif" : state === "unavailable" ? "Tidak tersedia" : "Tidak aktif";
+          connectionLabel.textContent = running ? "Perangkat aktif" : "Perangkat tidak aktif";
+          indicator.classList.toggle("is-running", running);
+        } catch {
+          statusPill.dataset.state = "stopped";
+          statusLabel.textContent = "Status tidak tersedia";
+          connectionLabel.textContent = "Status tidak tersedia";
+          indicator.classList.remove("is-running");
+        }
+      }
+
+      updateDeviceStatus();
+      window.setInterval(updateDeviceStatus, 15000);
+    </script>
+  </body>
+</html>
